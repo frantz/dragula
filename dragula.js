@@ -32,6 +32,7 @@ function dragula (initialContainers, options) {
   if (o.containers === void 0) { o.containers = initialContainers || []; }
   if (o.isContainer === void 0) { o.isContainer = never; }
   if (o.copy === void 0) { o.copy = false; }
+  if (o.alternativeCopy === void 0) { o.alternativeCopy = never; }
   if (o.revertOnSpill === void 0) { o.revertOnSpill = false; }
   if (o.removeOnSpill === void 0) { o.removeOnSpill = false; }
   if (o.direction === void 0) { o.direction = 'vertical'; }
@@ -149,7 +150,8 @@ function dragula (initialContainers, options) {
     end();
 
     if (isCopy(item, container)) {
-      _copy = item.cloneNode(true);
+      var altCopy = o.alternativeCopy(item, container);
+      _copy = altCopy || item.cloneNode(true);
       drake.emit('cloned', _copy, item, 'copy');
     }
 
@@ -416,7 +418,7 @@ function dragula (initialContainers, options) {
       return after ? nextEl(target) : target;
     }
   }
-  
+
   function isCopy (item, container) {
     if (typeof o.copy === 'boolean') {
       return o.copy;

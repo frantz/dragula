@@ -329,6 +329,9 @@ function dragula (initialContainers, options) {
     _mirror.style.top  = y + 'px';
 
     var item = _copy || _item;
+
+    drake.emit('dragmove', item, clientX, clientY);
+
     var container = item.parentElement;
     var elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
     var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
